@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "735923204820",
+    "firebase_url": "https://matchandplay-39ab8-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "matchandplay-39ab8",
+    "storage_bucket": "matchandplay-39ab8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735923204820:android:ad8f975adba5ff56254141",
+        "android_client_info": {
+          "package_name": "com.example.matchandplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735923204820-hhvevop9ugjn7urln9td566j7jb5k20v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.matchandplay",
+            "certificate_hash": "f156d180b117bd3b0141ec9881fb05211bc5beb2"
+          }
+        },
+        {
+          "client_id": "735923204820-atsb770eeruie6n78jee98em0kahri5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAng8fauSyREe_5vndGtVKx6zGsVJ9YWeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735923204820-atsb770eeruie6n78jee98em0kahri5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

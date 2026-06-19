@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_light">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Stats"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/pitch_green"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"/>
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                app:cardCornerRadius="75dp"
+                app:cardBackgroundColor="#E0E0E0">
+
+            <ImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@android:drawable/ic_menu_camera"
+                    android:scaleType="centerCrop"/>
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+                android:id="@+id/inputPosition"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Position (e.g. Striker)"
+                android:background="@drawable/bg_input_field"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:layout_marginBottom="16dp"/>
+
+        <EditText
+                android:id="@+id/inputAge"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Age"
+                android:inputType="number"
+                android:background="@drawable/bg_input_field"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:layout_marginBottom="16dp"/>
+
+        <EditText
+                android:id="@+id/inputCountry"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Country"
+                android:background="@drawable/bg_input_field"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:layout_marginBottom="16dp"/>
+
+        <EditText
+                android:id="@+id/inputCareer"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Career / Experience"
+                android:background="@drawable/bg_input_field"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:layout_marginBottom="16dp"/>
+
+        <EditText
+                android:id="@+id/inputFoot"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Preferred Foot"
+                android:background="@drawable/bg_input_field"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:layout_marginBottom="30dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Confirm Stats"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/bg_button_primary"
+                android:layout_marginBottom="10dp"/>
+
+        <Button
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:backgroundTint="@color/whistle_red"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="50dp"/>
+
+    </LinearLayout>
+</ScrollView>

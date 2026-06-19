@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F8F9FA">
+
+    <RelativeLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pitch_green"
+            android:elevation="4dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="40dp"
+            android:paddingBottom="10dp">
+        <Button
+                android:id="@+id/btnSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="#00000000"
+                android:text="Settings"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="MATCH &amp; PLAY"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        <Button
+                android:id="@+id/btnMatches"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="#00000000"
+                android:text="Matches"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+            android:id="@+id/emptyStateLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/topBar"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+        <RelativeLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="20dp">
+
+            <ImageView
+                    android:id="@+id/radarPulse"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/bg_button_primary"
+                    android:alpha="0.3"
+                    app:tint="@color/pitch_green" />
+
+            <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:src="@android:drawable/ic_menu_compass"
+                    app:tint="@color/pitch_green" />
+        </RelativeLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="You're all caught up!"
+                android:textColor="#333333"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="We are constantly scouting for new talent. Check back later or adjust your stats to widen your search!"
+                android:textAlignment="center"
+                android:textColor="#777777"
+                android:textSize="16sp" />
+
+        <Button
+                android:id="@+id/btnEditProfile"
+                android:layout_width="200dp"
+                android:layout_height="55dp"
+                android:background="@drawable/bg_button_primary"
+                android:text="UPDATE STATS"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/txtNoUsers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Searching database..."
+                android:textColor="@color/pitch_green"
+                android:textStyle="italic" />
+
+    </LinearLayout>
+
+    <com.yuyakaido.android.cardstackview.CardStackView
+            android:id="@+id/card_stack_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/topBar"
+            android:padding="8dp" />
+
+</RelativeLayout>

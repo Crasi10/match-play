@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:padding="32dp"
+              android:background="@color/bg_light">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Who are you?"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/pitch_green"
+            android:layout_marginBottom="50dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="I am a Player"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/bg_button_primary"
+            android:layout_marginBottom="24dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTeam"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="I am a Team Manager"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/bg_button_primary"/>
+
+</LinearLayout>
