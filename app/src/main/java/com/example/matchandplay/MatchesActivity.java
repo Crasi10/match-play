@@ -1,12 +1,8 @@
 package com.example.matchandplay;
-import android.widget.Button;
+
 import android.os.Bundle;
-import android.content.Intent;
-import android.net.Uri;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,12 +27,12 @@ public class MatchesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
 
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        // Initialize UI components but DO NOT fetch data yet
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setHasFixedSize(true);
@@ -46,42 +42,61 @@ public class MatchesActivity extends AppCompatActivity {
         mMatchesAdapter = new MatchesAdapter(resultsMatches, MatchesActivity.this);
         mRecyclerView.setAdapter(mMatchesAdapter);
 
-        getUserMatchId();
-
         Button btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(v -> {
-            finish(); // Simply closes this page and returns to Main
-        });
+        btnBack.setOnClickListener(v -> finish());
     }
 
-    private void getUserMatchId() {
-        // We don't know if we are "player" or "team", so check both paths or check UserType first.
-        // For simplicity, we check the database structure we built in MainActivity.
-        // Note: In a real app, save "userSex" to SharedPrefs to know efficiently.
-        // Here we assume checking "player" first.
+    // --- LIFECYCLE OPTIMIZATION ---
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Clear the list to prevent duplicates and crashes when returning to this screen
+        resultsMatches.clear();
+        mMatchesAdapter.notifyDataSetChanged();
 
-        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference().child("Users").child("player").child(currentUserID).child("connections").child("matches");
-        matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
+        // Fetch data now that the screen is safely visible
+        checkUserTypeAndFetchMatches();
+    }
+
+    private void checkUserTypeAndFetchMatches() {
+        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        // First, check if the user is a Player
+        userDb.child("player").child(currentUserID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for(DataSnapshot match : snapshot.getChildren()){
-                        FetchMatchInformation(match.getKey(), "team"); // If I am player, match is Team
-                    }
+                if (snapshot.exists()) {
+                    // I am a Player, so search for my matches
+                    fetchMatchIds("player", "team");
                 } else {
-                    // If not in player, try team path
-                    DatabaseReference matchDb2 = FirebaseDatabase.getInstance().getReference().child("Users").child("team").child(currentUserID).child("connections").child("matches");
-                    matchDb2.addListenerForSingleValueEvent(new ValueEventListener() {
+                    // I am not a player, check if I am a Team
+                    userDb.child("team").child(currentUserID).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()){
-                                for(DataSnapshot match : snapshot.getChildren()){
-                                    FetchMatchInformation(match.getKey(), "player"); // If I am team, match is Player
-                                }
+                            if (snapshot.exists()) {
+                                // I am a Team, so search for my matches
+                                fetchMatchIds("team", "player");
                             }
                         }
                         @Override public void onCancelled(@NonNull DatabaseError error) {}
                     });
+                }
+            }
+            @Override public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+
+    private void fetchMatchIds(String myType, String matchType) {
+        DatabaseReference matchDb = FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(myType).child(currentUserID).child("connections").child("matches");
+
+        matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot match : snapshot.getChildren()) {
+                        FetchMatchInformation(match.getKey(), matchType);
+                    }
                 }
             }
             @Override public void onCancelled(@NonNull DatabaseError error) {}
@@ -95,10 +110,20 @@ public class MatchesActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String userId = snapshot.getKey();
-                    String name = "";
-                    if(snapshot.child("name").getValue() != null) name = snapshot.child("name").getValue().toString();
+                    String name = "Unknown";
+                    String profileImageUrl = "default"; // FIXED: Prevents adapter crash from null URLs
 
-                    User obj = new User(userId, name, "", "", null);
+                    if (snapshot.child("name").getValue() != null) {
+                        name = snapshot.child("name").getValue().toString();
+                    }
+                    if (snapshot.child("profileImageUrl").getValue() != null) {
+                        profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
+                    }
+
+                    // Create the user object safely
+                    User obj = new User(userId, name, "", "", profileImageUrl);
+
+                    // Add to list and notify the adapter efficiently
                     resultsMatches.add(obj);
                     mMatchesAdapter.notifyDataSetChanged();
                 }

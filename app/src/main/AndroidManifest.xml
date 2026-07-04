@@ -36,8 +36,7 @@
 
         <activity
                 android:name=".MatchesActivity"
-                android:exported="false"
-                android:noHistory="true"/>
+                android:exported="false"/>
 
         <activity android:name=".ChatActivity" android:exported="false" />
         <activity android:name=".ChooseTypeActivity" android:exported="false" />

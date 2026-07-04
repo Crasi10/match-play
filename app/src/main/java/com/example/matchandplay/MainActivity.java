@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements CardStackListener
         }
         currentUId = mAuth.getCurrentUser().getUid();
 
-        // --- NEW: Top Bar Settings Button ---
+        // --- Top Bar Settings Button ---
         Button btnSettings = findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
@@ -121,8 +121,25 @@ public class MainActivity extends AppCompatActivity implements CardStackListener
         cardStackView.setAdapter(adapter);
         cardStackView.setItemAnimator(new DefaultItemAnimator());
 
-        // Step 1: Find out who we are and get our location/needs
-        checkUserType();
+        // Removed checkUserType() from here! It is now in onStart()
+    }
+
+    // --- NEW: LIFECYCLE OPTIMIZATION ---
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // 1. Clear the old data so we don't get duplicate cards if we navigate back here
+        userList.clear();
+        swipedUserIds.clear();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+
+        // 2. Fetch the data ONLY when the screen is fully visible to prevent crashing
+        if (currentUId != null) {
+            checkUserType();
+        }
     }
 
     private void checkUserType() {
